@@ -1,0 +1,11 @@
+La lista nodos es enormemente mejor para agregar elementos al principio,
+solo tarda 7 segundos en agregar diez millones de elementos, mientras
+que la lista arreglo tarda casi un minuto en agregar 400 mil elementos al 
+comienzo. No pude comparar con 10 millones porque tardaria muchisimo tiempo.
+
+La lista de arreglo es mejor para obtener el ultimo elemento, esta tarda
+siempre 0 mientras que la lista nodos tarda 3 milesimas mas en 400 mil 
+de elementos.
+
+tanto el arreglo como el nodo tardan 0 milesimas en entregar el ultimo
+elemento
