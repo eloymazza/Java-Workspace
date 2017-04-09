@@ -1,4 +1,4 @@
-package ejercicio1Best;
+package ejercicio1;
 
 public class NodeList {
 
@@ -248,7 +248,7 @@ public class NodeList {
 			result += aux.getElement() + " ";
 			aux = aux.getNext();
 		}
-
+		
 		return result;
 	}
 

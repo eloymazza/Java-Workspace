@@ -1,8 +1,6 @@
 package ejercicio1_2_3_4;
 
 
-import java.util.Arrays;
-
 public class RecursiveArray {
 
 	Object arr[];
