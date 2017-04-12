@@ -54,6 +54,53 @@ public class DFS {
 		
 		
 	}
+	
+	public  ArrayList<Vertex>  iterativeSearch(Graph graph){
+
+		
+		Stack<Vertex> s = new Stack<Vertex>();
+		int time = 0;
+		
+		s.push(vertexes.get(0));
+		
+		NodeList currentAdjacents;
+		int targetValue;
+		do{
+			currentAdjacents = adjacents[s.peek().getvalue()];
+			if(currentAdjacents != null){
+				for (int i = 0; i < currentAdjacents.size(); i++) {
+					targetValue = (int) currentAdjacents.getElementAt(i);
+					currentAdjacents.removeFirst();
+					if(currentAdjacents.isEmpty()){
+						adjacents[s.peek().getvalue()] = null;
+					}
+					for (Vertex vertex : vertexes) {
+						if(vertex.getvalue() == targetValue){
+							if(vertex.state == State.unvisited){
+								time++;
+								vertex.setTime(time);
+								vertex.setState(State.visiting);
+								s.push(vertex);
+								i = currentAdjacents.size();
+								break;
+							}
+						}
+					}
+				}
+			}
+			else{
+				s.peek().setState(State.visited);
+				s.pop();
+			}
+	
+		}while(!s.isEmpty());
+		
+		Collections.sort(vertexes, new VertexComparator());
+		time = 0;
+		return vertexes;
+		
+		
+	}
 
 	
 }
