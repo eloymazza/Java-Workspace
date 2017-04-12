@@ -4,12 +4,10 @@ public class Vertex {
 	
 	State state;
 	int value;
-	int time;
 	
 	public Vertex(int value){
 		this.value = value;
 		state = State.unvisited;
-		time = 0;
 	}
 
 	public State getState() {
@@ -28,19 +26,8 @@ public class Vertex {
 		this.value = value;
 	}
 	
-	public int getTime() {
-		return time;
-	}
-	
-	public void setTime(int time) {
-		this.time = time;
-	}
-	
-	public String toString(){
-		
+	public String toString(){	
 		return "" + value;
 	}
-	
-	 
 	
 }

@@ -40,20 +40,18 @@ public class DirectedGraph extends Graph {
 
 	public static void main(String[] args) {
 
-		Graph g = new DirectedGraph(6);
+		Graph g = new DirectedGraph(4);
 
 		g.addAdjacent(0, 1);
 		g.addAdjacent(0, 2);
 		g.addAdjacent(1, 3);
-		g.addAdjacent(2, 4);
-		g.addAdjacent(3, 5);
+		g.addAdjacent(2, 3);
+		g.addAdjacent(2, 1);
+		g.addAdjacent(3, 2);
 		
 		System.out.println(g.toString());
-		
 		DFS dfs = new DFS(g);
-		
 		System.out.println(dfs.iterativeSearch(g));
-
 	}
 
 

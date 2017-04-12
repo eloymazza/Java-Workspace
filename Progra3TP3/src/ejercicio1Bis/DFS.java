@@ -7,34 +7,30 @@ import ejercicio1.NodeList;
 
 public class DFS {
 	
-	 private int time = 0;
 	 private ArrayList<Vertex> vertexes;
 	 private NodeList[] adjacents;
+	 private boolean cycleDetected;
 	 
 	 public DFS (Graph g){
 		 vertexes = g.getVertexes();
 		 adjacents = g.getAdjacentList();
+		 cycleDetected = false;
 	 }
 	 
 	
-	public ArrayList<Vertex> search(Graph graph){
-	
+	public boolean search(Graph graph){
+		
 		for (Vertex vertex : vertexes) {
-			if(vertex.state == State.unvisited){
-				search(vertex);
+			if(vertex.state == State.unvisited && cycleDetected == false){
+				cycleDetected = search(vertex);
 			}
 		}
-		time = 0;
-		Collections.sort(vertexes, new VertexComparator());
-		return vertexes;	
+		return cycleDetected;	
 	}
 
-	private  void search(Vertex vertex) {
+	private  boolean search(Vertex vertex) {
 		
 		vertex.setState(State.visiting);
-		
-		vertex.setTime(time);
-		time++;
 		
 		int value = vertex.getvalue();
 		int currentAdjacent;
@@ -42,29 +38,31 @@ public class DFS {
 			for (int i = 0; i < adjacents[value].size(); i++) {				
 				currentAdjacent = (int) adjacents[value].getElementAt(i);
 				for (Vertex v : vertexes) {
-					if(v.getvalue() == currentAdjacent && (v.state == State.unvisited)){
-						search(v);
-						break;
+					if(v.getvalue() == currentAdjacent){
+						if(v.state == State.unvisited){
+							return search(v);
+						}
+						else if(v.state == State.visiting){
+							return true;
+						}	
 					}
 				}
 			}
 		}
-		
 		vertex.setState(State.visited);
-		
-		
+		return false;
 	}
 	
-	public  ArrayList<Vertex>  iterativeSearch(Graph graph){
+	public  boolean  iterativeSearch(Graph graph){
 
 		
 		Stack<Vertex> s = new Stack<Vertex>();
-		int time = 0;
-		
-		s.push(vertexes.get(0));
-		
 		NodeList currentAdjacents;
 		int targetValue;
+		
+		s.push(vertexes.get(0));
+;		s.peek().setState(State.visiting);
+		
 		do{
 			currentAdjacents = adjacents[s.peek().getvalue()];
 			if(currentAdjacents != null){
@@ -77,11 +75,13 @@ public class DFS {
 					for (Vertex vertex : vertexes) {
 						if(vertex.getvalue() == targetValue){
 							if(vertex.state == State.unvisited){
-								time++;
-								vertex.setTime(time);
 								vertex.setState(State.visiting);
 								s.push(vertex);
 								i = currentAdjacents.size();
+								break;
+							}
+							else if(vertex.state == State.visiting){
+								cycleDetected = true;
 								break;
 							}
 						}
@@ -93,11 +93,9 @@ public class DFS {
 				s.pop();
 			}
 	
-		}while(!s.isEmpty());
+		}while(!s.isEmpty() && !cycleDetected);
 		
-		Collections.sort(vertexes, new VertexComparator());
-		time = 0;
-		return vertexes;
+		return cycleDetected;
 		
 		
 	}
