@@ -1,4 +1,4 @@
-package ejercicio1Bis;
+package Graph;
 
 public class Vertex {
 	

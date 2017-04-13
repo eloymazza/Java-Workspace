@@ -1,8 +1,6 @@
-package ejercicio1Bis;
+package Graph;
 
 import java.util.ArrayList;
-
-import ejercicio1.NodeList;
 
 public abstract class Graph {
 	
@@ -49,6 +47,7 @@ public abstract class Graph {
 	// Agrega un adjacente a determinado vertice. Cambia segun si el grafo es Dirigido o no
 	public abstract void addAdjacent(int origin, int destination);
 
+	public abstract void fillGraph(int maxEdges, boolean hasCycle);
 
 	
 }

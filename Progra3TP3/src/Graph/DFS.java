@@ -1,8 +1,7 @@
-package ejercicio1Bis;
+package Graph;
 
 import java.util.*;
 
-import ejercicio1.NodeList;
 
 
 public class DFS {
@@ -18,11 +17,13 @@ public class DFS {
 	 }
 	 
 	
+	 //DFS RECURSIVO
 	public boolean search(Graph graph){
 		
 		for (Vertex vertex : vertexes) {
 			if(vertex.state == State.unvisited && cycleDetected == false){
 				cycleDetected = search(vertex);
+				
 			}
 		}
 		return cycleDetected;	
@@ -40,19 +41,21 @@ public class DFS {
 				for (Vertex v : vertexes) {
 					if(v.getvalue() == currentAdjacent){
 						if(v.state == State.unvisited){
-							return search(v);
+							cycleDetected = search(v);
 						}
 						else if(v.state == State.visiting){
-							return true;
+							 cycleDetected = true;
 						}	
 					}
 				}
 			}
 		}
 		vertex.setState(State.visited);
-		return false;
+		return cycleDetected;
 	}
 	
+	
+	//DFS ITERATIVO
 	public  boolean  iterativeSearch(Graph graph){
 
 		

@@ -1,4 +1,4 @@
-package ejercicio1;
+package Graph;
 
 public class NodeList {
 

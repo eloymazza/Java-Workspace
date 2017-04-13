@@ -1,6 +1,5 @@
-package ejercicio1Bis;
+package Graph;
 
-import ejercicio1.NodeList;
 
 public class NonDirectedGraph extends Graph{
 
@@ -26,6 +25,12 @@ public class NonDirectedGraph extends Graph{
 			}
 		}
 
+	}
+
+	@Override
+	public void fillGraph(int maxEdges,  boolean hasCycles) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
