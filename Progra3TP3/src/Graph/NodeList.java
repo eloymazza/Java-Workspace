@@ -228,6 +228,20 @@ public class NodeList {
 		}
 		return newList;
 	}
+	
+	public NodeList clone(){
+		
+		NodeList clon = new NodeList();
+		
+		Node aux = root;
+		while(aux != null){
+			clon.insertAtEnd(aux.getElement());
+			aux = aux.getNext();
+		}
+		
+		return clon;
+		
+	}
 		
 	public static NodeList sort(NodeList l) {
 
@@ -239,6 +253,7 @@ public class NodeList {
 		}
 		return  newList;
 	}
+	
 
 	public String toString(){
 
@@ -255,7 +270,9 @@ public class NodeList {
 
 
 	public static void main(String[] args) {
-
+		
+		
+		/*
 		NodeList l1 = new NodeList();
 		NodeList l2 = new NodeList();
 
@@ -271,7 +288,9 @@ public class NodeList {
 		
 		NodeList l3 = sort(createDisjunctionList(l1,l2));
 		System.out.println(l3);
-	
+		
+		*/
+		
 
 		/*
 		for (int i = 0; i < 100; i++) {		
@@ -410,6 +429,8 @@ public class NodeList {
 
 		 */
 	}
+
+
 
 
 }

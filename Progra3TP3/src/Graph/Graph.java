@@ -44,6 +44,7 @@ public abstract class Graph {
 	public NodeList[] getAdjacentList() {
 		return adjacents;
 	}
+	
 	// Agrega un adjacente a determinado vertice. Cambia segun si el grafo es Dirigido o no
 	public abstract void addAdjacent(int origin, int destination);
 
