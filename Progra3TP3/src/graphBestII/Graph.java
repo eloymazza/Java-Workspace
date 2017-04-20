@@ -1,16 +1,14 @@
-package graphBest;
-
-import graphBest.GraphNodeList;
+package graphBestII;
 
 public class Graph {
 
-	GraphNodeList []adjacents;
+	NodeList []adjacents;
 	int cantVertexes;	
 
 	public Graph(int cantVertexes){
 
 		this.cantVertexes = cantVertexes;
-		adjacents = new GraphNodeList[cantVertexes];
+		adjacents = new NodeList[cantVertexes];
 
 	}
 
@@ -29,36 +27,28 @@ public class Graph {
 		return cantVertexes;
 	}
 
-	// Retorna una copia de los adjacentes del grafo
-	public GraphNodeList[] getAdjacentList() {
-
-		GraphNodeList[] clone = new GraphNodeList[cantVertexes];
-		
-		for (int i = 0; i < cantVertexes; i++) {
-			if(adjacents[i] != null){
-				clone[i] = adjacents[i].clone();				
-			}
-			else{
-				clone[i] = null;
-			}
-		}
-		
-		return clone;
-	}
-
 	// Agrega un adyacente a la lista de adyacencia..
-	public void addAdjacent(int origin, int destination, int weight) {
+	public void addAdjacent(int origin, int destination) {
 
 		int length = adjacents.length;
 		if((origin < length && origin >= 0) && (destination < length && destination >= 0)){
 
 			if(adjacents[origin] == null){
-				adjacents[origin] = new GraphNodeList();
+				adjacents[origin] = new NodeList();
 			}
 			if(!hasEdge(origin, destination)){
-				adjacents[origin].insertAtEnd(destination, weight);
+				adjacents[origin].insertAtEnd(destination);
 			}
 		}
+	}
+	
+	//Dado un indice, retorna la lisa de adjacencia vinculada al vertice en ese indice
+	public NodeList getAdjacents(int i){
+		
+		if(i < adjacents.length && i >= 0){			
+			return adjacents[i];
+		}
+		return null;
 	}
 
 	// Imprime lista de adjacencia
@@ -84,7 +74,7 @@ public class Graph {
 		for (int i = 0; i < length; i++) {
 
 			for (int j = i+1; j <= a; j++) {
-				this.addAdjacent(i, j, 0);
+				this.addAdjacent(i, j);
 			}
 
 			//a se incrementa solo hasta lenght - maxedges para evitar que se creen aristas que apunten
@@ -98,7 +88,7 @@ public class Graph {
 		if(hasCycles){
 			int i = generateRandom(adjacents.length);
 			int j = generateRandom(i);
-			this.addAdjacent(i, j, 0);
+			this.addAdjacent(i, j);
 		}
 	}
 
@@ -106,27 +96,35 @@ public class Graph {
 
 		return (int)Math.floor(Math.random()*i);
 	}
-
-
+	
 	public static void main(String[] args) {
-
-		Graph g1 = new Graph(8);
 		
-		g1.addAdjacent( 0, 1, 0);
-		g1.addAdjacent( 0, 3, 0);
-		g1.addAdjacent(0, 6, 0);
-		g1.addAdjacent(1, 4, 0);
-		g1.addAdjacent(3, 5, 0);
-		g1.addAdjacent(3, 7, 0);
-		g1.addAdjacent(4, 5, 0);
-		g1.addAdjacent(4, 2, 0);
+		Graph g1 = new Graph(100);
 		
+		g1.fillGraph(4, true);
 		
-		System.out.println(g1 + "\n");
-		System.out.println(BFS.search(g1).toString());
-			
+		/*
+		g1.addAdjacent(0, 1);
+		g1.addAdjacent(0, 2);
+		g1.addAdjacent(1, 3);
+		g1.addAdjacent(2, 4);
+		g1.addAdjacent(2, 5);
+		g1.addAdjacent(3, 8);
+		g1.addAdjacent(3, 4);
+		g1.addAdjacent(4, 9);
+		g1.addAdjacent(4, 7);
+		g1.addAdjacent(5,4);
+		g1.addAdjacent(5, 6);
+		g1.addAdjacent(6, 9);
+		g1.addAdjacent(6, 7);
+		g1.addAdjacent(6, 8);
+		g1.addAdjacent(9, 1);
+		*/
 		
+		System.out.println(g1);
+		System.out.println(DFS.hasCycle(g1));
 	}
+
 
 
 }

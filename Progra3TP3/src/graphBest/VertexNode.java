@@ -1,5 +1,7 @@
 package graphBest;
 
+import graphBestII.State;
+
 
 
 public class VertexNode {
@@ -8,6 +10,7 @@ public class VertexNode {
 	private VertexNode next;
 	private int weight;
 	State state = State.unvisited;
+	private int d;
 	
 
 	// Constructor para el nodo ponderado
@@ -19,6 +22,14 @@ public class VertexNode {
 		
 	}
 	
+	public int getD() {
+		return d;
+	}
+
+	public void setD(int d) {
+		this.d = d;
+	}
+
 	// Constructor para nodo vertice
 	public VertexNode(Object element){
 		this.element = element;

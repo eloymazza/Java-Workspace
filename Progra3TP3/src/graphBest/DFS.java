@@ -1,13 +1,15 @@
  package graphBest;
 
+import graphBestII.State;
+
 public class DFS {
 	
 	public static GraphNodeList[] adjacentsList;
 	public static VertexNode[] vertexes;
 
-	public static boolean hasCycle(GraphNodeList[] graphAdjacents){
+	public static boolean hasCycle(Graph graph){
 		
-		adjacentsList = graphAdjacents;
+		adjacentsList = graph.getAdjacentList();
 		vertexes = new VertexNode[adjacentsList.length];
 		
 		for (int i = 0; i < vertexes.length; i++) {
