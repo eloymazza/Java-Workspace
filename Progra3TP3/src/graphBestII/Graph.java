@@ -99,11 +99,19 @@ public class Graph {
 	
 	public static void main(String[] args) {
 		
-		Graph g1 = new Graph(100);
+		Graph g1 = new Graph(7);
 		
-		g1.fillGraph(4, true);
 		
-		/*
+		g1.addAdjacent(0, 6);
+		g1.addAdjacent(0, 1);
+		g1.addAdjacent(1, 2);
+		g1.addAdjacent(1, 3);
+		g1.addAdjacent(2, 4);
+		g1.addAdjacent(4, 5);
+		
+		
+		
+		/* Util para probar dfs
 		g1.addAdjacent(0, 1);
 		g1.addAdjacent(0, 2);
 		g1.addAdjacent(1, 3);
@@ -122,7 +130,7 @@ public class Graph {
 		*/
 		
 		System.out.println(g1);
-		System.out.println(DFS.hasCycle(g1));
+		System.out.println(BFS.BFSPath(g1));
 	}
 
 
