@@ -2,7 +2,7 @@ package ejercicio2;
 
 import java.util.*;
 
-public class MarketAssault {
+public class BackPack {
 
 	private static double bagCapacity;
 	private static double currentWeight;
@@ -16,7 +16,7 @@ public class MarketAssault {
 	 * Este metodo recibe un conjunto de items, un peso maximo que puede cargar la mochila, y 
 	 * un booelano que indica si los items del conjunto dado son fraccionables.
 	 */
-	public static Map<String, Double> fillBag(Set<Item> items, Double weight, boolean isFractal){
+	public static Map<String, Double> fillBackPack(Set<Item> items, Double weight, boolean isFractal){
 
 		setStartingTools(weight); // inicializo las estructuras y variables que necesito para esta funcion 
 		Item bestPick = null;  // En esta variable se va a guardar los items elegidos.
@@ -137,9 +137,9 @@ public class MarketAssault {
 		items.add(l2);
 		items.add(l3);
 
-		Map <String, Double> result = MarketAssault.fillBag(items, 16.0, false);
+		Map <String, Double> result = BackPack.fillBackPack(items, 16.0, false);
 		System.out.println(result);
-		System.out.println(MarketAssault.getSolutionValue());
+		System.out.println(BackPack.getSolutionValue());
 	}
 
 }
