@@ -139,7 +139,7 @@ public class BackPack {
 
 		Map <String, Double> result = BackPack.fillBackPack(items, 16.0, false);
 		System.out.println(result);
-		System.out.println(BackPack.getSolutionValue());
+		System.out.println("Valor maximizado: " + BackPack.getSolutionValue());
 	}
 
 }
