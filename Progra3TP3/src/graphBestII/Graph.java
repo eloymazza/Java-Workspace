@@ -101,17 +101,17 @@ public class Graph {
 		
 		Graph g1 = new Graph(7);
 		
+		// Util para probar bfs
+//		g1.addAdjacent(0, 6);
+//		g1.addAdjacent(0, 1);
+//		g1.addAdjacent(1, 2);
+//		g1.addAdjacent(1, 3);
+//		g1.addAdjacent(2, 4);
+//		g1.addAdjacent(4, 5);
+//		
 		
-		g1.addAdjacent(0, 6);
-		g1.addAdjacent(0, 1);
-		g1.addAdjacent(1, 2);
-		g1.addAdjacent(1, 3);
-		g1.addAdjacent(2, 4);
-		g1.addAdjacent(4, 5);
 		
-		
-		
-		/* Util para probar dfs
+		//Util para probar dfs
 		g1.addAdjacent(0, 1);
 		g1.addAdjacent(0, 2);
 		g1.addAdjacent(1, 3);
@@ -127,10 +127,10 @@ public class Graph {
 		g1.addAdjacent(6, 7);
 		g1.addAdjacent(6, 8);
 		g1.addAdjacent(9, 1);
-		*/
+		
 		
 		System.out.println(g1);
-		System.out.println(BFS.BFSPath(g1));
+		System.out.println(DFS.DFSPathIterative(g1));
 	}
 
 

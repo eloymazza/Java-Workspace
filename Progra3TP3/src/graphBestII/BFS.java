@@ -42,9 +42,6 @@ public class BFS {
 		}
 		return result;
 	}
-	
-	
-	
 
 	// Inicializa herramientas basicas para realizar dfs
 		private static void setInitialValues(Graph g){
@@ -56,5 +53,7 @@ public class BFS {
 						visited[i] = State.unvisited;
 					}
 		}
+		
+		
 	
 }
