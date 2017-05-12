@@ -1,4 +1,4 @@
-package Graph;
+package ejercicio1;
 
 public class Node {
 	
