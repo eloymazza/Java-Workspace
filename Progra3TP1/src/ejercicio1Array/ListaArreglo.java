@@ -1,8 +1,8 @@
-package ejercicio1Array;
+package ProgramacionIII.TPE;
 
 public class ListaArreglo {
 
-	Object arr[];
+	Usuario arr[];
 	int cantidad = 0;
 
 	public ListaArreglo(){
