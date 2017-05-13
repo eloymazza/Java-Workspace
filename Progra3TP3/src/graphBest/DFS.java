@@ -1,6 +1,6 @@
  package graphBest;
 
-import graphBestII.State;
+import graph.State;
 
 public class DFS {
 	
