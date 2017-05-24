@@ -17,20 +17,22 @@ public class SumaDeSubconjuntos {
 			
 		for (int i = 0; i < conjunto.size(); i++) {
 			buscarSolucion((int)conjunto.getElementAt(i));
+			conjunto = NodeList.sort(conjunto);
 		}
 		return solucion;	
 	}
 
 	private static void buscarSolucion(int x) {
+		
 		sumaActual += x;
 		conjunto.removeFirstOcurrence(x);
 		visitados.insertAtEnd(x);
 		if(sumaActual == objetivo){
-			solucion.insertAtEnd(visitados);
-			System.out.println(solucion);
+			guardarSolucion(visitados);
 		}
 		else{
 			for (int i = 0; i < conjunto.size(); i++) {
+				conjunto = NodeList.sort(conjunto);
 				buscarSolucion((int)conjunto.getElementAt(i));
 			}			
 		}
@@ -39,14 +41,24 @@ public class SumaDeSubconjuntos {
 		sumaActual -= x;
 	}
 	
+	private static void guardarSolucion(NodeList visitados) {
+		
+		NodeList copiaVisitados = new NodeList();
+		for (int i = 0; i < visitados.size(); i++) {
+			copiaVisitados.insertAtEnd(visitados.getElementAt(i));
+		}
+		solucion.insertAtEnd(copiaVisitados);
+	}
+
 	public static void main(String[] args) {
 		
 		NodeList c1 = new NodeList();
 		c1.insertAtEnd(1);
 		c1.insertAtEnd(2);
 		c1.insertAtEnd(3);
+		c1.insertAtEnd(4);
 		
-		System.out.println(SumaDeSubconjuntos.getSolucion(6, c1));
+		System.out.println(SumaDeSubconjuntos.getSolucion(5, c1));
 		
 	}
 }
