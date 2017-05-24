@@ -1,7 +1,7 @@
 package graphBest;
-import graphBestII.State;
-
 import java.util.*;
+
+import graph.State;
 
 public class BFS {
 
