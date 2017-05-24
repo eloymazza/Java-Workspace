@@ -22,6 +22,7 @@ public class SumaDeSubconjuntosSinRepeticion {
 			noPermitidos.put((Integer) conjunto.getElementAt(i), new NodeList());
 		}
 		for (int i = 0; i < conjunto.size(); i++) {
+			System.out.println(i);
 			buscarSolucion((int)conjunto.getElementAt(i));
 			conjunto = NodeList.sort(conjunto);
 		}
@@ -38,16 +39,24 @@ public class SumaDeSubconjuntosSinRepeticion {
 			actualizarNoPermitidos(visitados);
 		}
 		else{
-			for (int i = 0; i < conjunto.size(); i++) {
-				conjunto = NodeList.sort(conjunto);
-				if(!(noPermitidos.get(x).contains(conjunto.getElementAt(i)))){
-					buscarSolucion((int) conjunto.getElementAt(i));					
-				}
-			}	
+			if(!poda()){
+				for (int i = 0; i < conjunto.size(); i++) {
+					conjunto = NodeList.sort(conjunto);
+					if(!(noPermitidos.get(x).contains(conjunto.getElementAt(i)))){
+						buscarSolucion((int) conjunto.getElementAt(i));					
+					}
+				}				
+			}
 		}
 		conjunto.insertAtStart(x);
 		visitados.removeFirstOcurrence(x);
 		sumaActual -= x;
+	}
+
+	private static boolean poda() {
+		
+		return sumaActual > objetivo;
+		
 	}
 
 	private static void actualizarNoPermitidos(NodeList visitados) {
@@ -78,21 +87,17 @@ public class SumaDeSubconjuntosSinRepeticion {
 		long tiempoInicial;
 		long tiempoTotal;
 
-		c1.insertAtEnd(1);
-		c1.insertAtEnd(2);
-		c1.insertAtEnd(3);
-		c1.insertAtEnd(4);
-		c1.insertAtEnd(5);
-
+	
 		// 50 elementos
 
-		//for (int i = 0; i < 20; i++) {
-		//	c1.insertAtStart((int)Math.floor(Math.random()*30));
-		//}
+		for (int i = 0; i < 1000; i++) {
+			c1.insertAtStart((int)Math.floor(Math.random()*100));
+		}
 
 		tiempoInicial = System.currentTimeMillis();
-		System.out.println(SumaDeSubconjuntosSinRepeticion.getSolucion(15, c1));
+		System.out.println(SumaDeSubconjuntosSinRepeticion.getSolucion(10, c1).size());
 		tiempoTotal = System.currentTimeMillis() - tiempoInicial;
+
 
 
 	}

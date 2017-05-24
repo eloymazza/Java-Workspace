@@ -31,16 +31,22 @@ public class SumaDeSubconjuntos {
 			guardarSolucion(visitados);
 		}
 		else{
-			for (int i = 0; i < conjunto.size(); i++) {
-				conjunto = NodeList.sort(conjunto);
-				buscarSolucion((int)conjunto.getElementAt(i));
-			}			
+			if(!poda()){
+				for (int i = 0; i < conjunto.size(); i++) {
+					conjunto = NodeList.sort(conjunto);
+					buscarSolucion((int)conjunto.getElementAt(i));
+				}			
+			}
 		}
 		conjunto.insertAtStart(x);
 		visitados.removeFirstOcurrence(x);
 		sumaActual -= x;
 	}
 	
+	private static boolean poda() {
+		return sumaActual > objetivo;
+	}
+
 	private static void guardarSolucion(NodeList visitados) {
 		
 		NodeList copiaVisitados = new NodeList();
@@ -57,19 +63,15 @@ public class SumaDeSubconjuntos {
 		long tiempoInicial;
 		long tiempoTotal;
 		
-		c1.insertAtEnd(1);
-		c1.insertAtEnd(2);
-		c1.insertAtEnd(3);
-		c1.insertAtEnd(4);
-		
 		// 50 elementos
 		
-		//for (int i = 0; i < 20; i++) {
-		//	c1.insertAtStart((int)Math.floor(Math.random()*30));
-		//}
+		for (int i = 0; i < 50; i++) {
+			c1.insertAtStart((int)Math.floor(Math.random()*50));
+		}
+		System.out.println(c1);
 		
 		tiempoInicial = System.currentTimeMillis();
-		System.out.println(SumaDeSubconjuntos.getSolucion(7, c1));
+		System.out.println(SumaDeSubconjuntos.getSolucion(50, c1).size());
 		tiempoTotal = System.currentTimeMillis() - tiempoInicial;
 		
 		
