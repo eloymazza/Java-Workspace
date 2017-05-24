@@ -133,7 +133,6 @@ public class NodeList {
 		if(!isEmpty()){
 			if (root.getElement().equals(o)) {
 				removeFirst();
-				size--;
 				return true;
 			}
 			else{
@@ -152,7 +151,6 @@ public class NodeList {
 				if(aux.getElement().equals(o)){
 					System.out.println("entro");
 					removeLast();
-					size--;
 					return true;
 				}
 			}	
@@ -199,6 +197,16 @@ public class NodeList {
 			}
 		}
 		return false;
+	}
+	
+	public boolean containsAll(NodeList n){
+		
+		for (int i = 0; i < n.size(); i++) {
+			if(!this.contains(n.getElementAt(i))){
+				return false;
+			}
+		}
+		return true;	
 	}
 
 	public static NodeList createIntersectionList(NodeList a, NodeList b){
@@ -266,11 +274,10 @@ public class NodeList {
 		
 		l2.insertAtEnd(5);
 		l2.insertAtEnd(1);
-		l2.insertAtEnd(3);
-		l2.insertAtEnd(2);
+		l2.insertAtEnd(1);
+		l2.insertAtEnd(1);
 		
-		NodeList l3 = sort(createDisjunctionList(l1,l2));
-		System.out.println(l3);
+		System.out.println(l1.containsAll(l2));
 	
 
 		/*
