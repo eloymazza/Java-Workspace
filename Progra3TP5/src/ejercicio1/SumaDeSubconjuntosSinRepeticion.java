@@ -90,12 +90,15 @@ public class SumaDeSubconjuntosSinRepeticion {
 	
 		// 50 elementos
 
-		for (int i = 0; i < 1000; i++) {
-			c1.insertAtStart((int)Math.floor(Math.random()*100));
-		}
+		c1.insertAtEnd(1);
+		c1.insertAtEnd(2);
+		c1.insertAtEnd(7);
+		c1.insertAtEnd(3);
+		c1.insertAtEnd(4);
+		
 
 		tiempoInicial = System.currentTimeMillis();
-		System.out.println(SumaDeSubconjuntosSinRepeticion.getSolucion(10, c1).size());
+		System.out.println(SumaDeSubconjuntosSinRepeticion.getSolucion(10, c1));
 		tiempoTotal = System.currentTimeMillis() - tiempoInicial;
 
 
