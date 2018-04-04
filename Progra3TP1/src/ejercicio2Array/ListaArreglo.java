@@ -1,4 +1,4 @@
-package ejercicio1Array;
+package ejercicio2Array;
 
 public class ListaArreglo {
 
@@ -6,7 +6,7 @@ public class ListaArreglo {
 	int cantidad = 0;
 
 	public ListaArreglo(){
-		arr = new Object[10];
+		arr = new Object[2];
 	}
 
 	public boolean estaVacia(){
@@ -18,7 +18,7 @@ public class ListaArreglo {
 	}
 
 	public Object getElemento(int pos){
-		if(pos < cantidad){
+		if(pos < cantidad && pos >= 0){
 			return arr[pos];
 		}
 		return null;
@@ -45,14 +45,14 @@ public class ListaArreglo {
 
 	public void imprimirALoCroto(){
 
-		for (int i = 0; i != cantidad; i++) {
-			System.out.println(arr[i]);
-		}
+		String result = "";
+		for (int i = 0; i != arr.length; i++) {
+			result+= arr[i] + " ";
+		}	
+		System.out.println(result);
 
 	}
 	
-	
-
 	public void eliminarTodo(){
 		arr = new Object[10];
 		cantidad = 0;
@@ -61,7 +61,14 @@ public class ListaArreglo {
 	public static void main(String[] args) {
 
 		ListaArreglo l1 = new ListaArreglo();
-
+		
+		l1.insertarAlComienzo(1);
+		l1.insertarAlComienzo(2);
+		l1.insertarAlComienzo(3);
+		l1.insertarAlComienzo(4);
+		l1.insertarAlComienzo(5);
+		l1.imprimirALoCroto();
+		/*
 		long startTime;
 		long totalTime;
 
@@ -218,6 +225,7 @@ public class ListaArreglo {
 		System.out.println("Tiempo en obtener tamaño: " + totalTime );
 
 		l1.eliminarTodo();		
+		*/
 	}
 
 }

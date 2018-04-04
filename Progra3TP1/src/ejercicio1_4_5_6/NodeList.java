@@ -1,4 +1,4 @@
-package ejercicio1Best;
+package ejercicio1_4_5_6;
 
 public class NodeList {
 
@@ -107,7 +107,6 @@ public class NodeList {
 				aux = aux.getNext();
 				count++;
 			}
-			aux.getNext().setNext(null);
 			aux.setNext(null);
 			size--;
 		}
@@ -146,10 +145,8 @@ public class NodeList {
 						return true;
 					}
 					aux = aux.getNext();
-				}
-				
+				}			
 				if(aux.getElement().equals(o)){
-					System.out.println("entro");
 					removeLast();
 					return true;
 				}
@@ -209,6 +206,7 @@ public class NodeList {
 		return true;	
 	}
 
+	// Ejercicio 5
 	public static NodeList createIntersectionList(NodeList a, NodeList b){
 
 		NodeList newList = new NodeList();
@@ -223,6 +221,7 @@ public class NodeList {
 		return newList;
 	}
 	
+	// Ejercicio 6
 	public static NodeList createDisjunctionList(NodeList a, NodeList b){
 		
 		NodeList newList = new NodeList();
@@ -265,22 +264,26 @@ public class NodeList {
 	public static void main(String[] args) {
 
 		NodeList l1 = new NodeList();
+		l1.insertAtEnd(1);
+		l1.insertAtEnd(2);
+		l1.insertAtEnd(3);
+		l1.insertAtEnd(4);
+		l1.insertAtEnd(5);
+		System.out.println(l1.toString());
+		l1.removeLast();
+		System.out.println(l1.toString());
+		/*
 		NodeList l2 = new NodeList();
 
-		l1.insertAtEnd(4);
-		l1.insertAtEnd(3);
-		l1.insertAtEnd(2);
-		l1.insertAtEnd(1);
 		
 		l2.insertAtEnd(5);
 		l2.insertAtEnd(1);
 		l2.insertAtEnd(1);
 		l2.insertAtEnd(1);
 		
-		System.out.println(l1.containsAll(l2));
 	
 
-		/*
+	
 		for (int i = 0; i < 100; i++) {		
 			l1.insertAtEnd((int)Math.floor(Math.random()*100));
 		}

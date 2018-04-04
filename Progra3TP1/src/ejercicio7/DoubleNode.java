@@ -17,23 +17,14 @@ public class DoubleNode {
 	public Object getElement() {
 		return element;
 	}
-
-
-
-
+	
 	public void setElement(Object element) {
 		this.element = element;
 	}
 
-
-
-
 	public DoubleNode getPrevious() {
 		return previous;
 	}
-
-
-
 
 	public void setPrevious(DoubleNode previous) {
 		this.previous = previous;

@@ -1,4 +1,4 @@
-package ejercicio1Best;
+package ejercicio1_4_5_6;
 
 public class Node {
 	

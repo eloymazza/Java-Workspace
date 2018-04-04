@@ -59,18 +59,21 @@ public class BinaryTree {
 		
 	}
 	
-	private boolean hasElem(Node node, Integer elem) {
+	private boolean hasElem(Node node, Integer elem){
+		
 		
 		if(node != null){
-			if(node.getKey().equals(elem)){
+			Integer currentKey = node.getKey();
+			System.out.println(currentKey);
+			if(elem == currentKey){
 				return true;
 			}
 			else{
-				if(hasElem(node.getLeft(), elem)){
-					return true;
+				if(elem < currentKey){
+					return hasElem(node.getLeft(), elem);
 				}
-				if(hasElem(node.getRight(), elem)){
-					return true;
+				else if(elem > currentKey){
+					return hasElem(node.getRight(), elem);
 				}
 			}
 		}
@@ -95,6 +98,13 @@ public class BinaryTree {
 	
 	}
 	
+	public boolean delete(Integer elem){
+		
+		
+		
+		return false;
+	}
+	
 	public static void main(String[] args) {
 		
 		BinaryTree t = new BinaryTree(5);
@@ -106,6 +116,6 @@ public class BinaryTree {
 		
 		t.printInOrder();
 		
-		System.out.println(t.hasElem(10));
+		System.out.println(t.hasElem(11));
 	}
 }

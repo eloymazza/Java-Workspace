@@ -101,7 +101,6 @@ public class DoubleLinkedList {
 					return aux.getElement();
 				}
 				else{
-					System.out.println("entre por colectora");
 					DoubleNode aux = last;
 					int count = size()-1;
 					while(count != pos){
