@@ -9,7 +9,12 @@ public class RecursiveArray {
 	public RecursiveArray(){
 		arr = new Object[10];
 	}
-
+	
+	public RecursiveArray(Object arr[]){
+		this.arr = arr;
+		size = arr.length;
+	}
+	
 	public boolean isEmpty(){
 		return size == 0;
 	}
@@ -42,7 +47,6 @@ public class RecursiveArray {
 	public void insertAtStart(Object o){
 
 		if(arr[arr.length-1] != null){
-
 			Object nuevoArreglo[] = new Object[size*2];
 			for (int i = 0; i < size; i++) {
 				nuevoArreglo[i] = arr[i];
@@ -235,6 +239,39 @@ public class RecursiveArray {
 		return getElementRecursively(pos, count);
 
 	}
+	
+	public Object binarySearch(Object o){
+		
+		if(!isEmpty() && isSorted()){
+			int inicio = 0;
+			int fin  = size - 1;
+			int medio = inicio+fin/2;
+			return binarySearch(inicio, fin, medio, o);
+		}
+		return null;
+		
+	}
+	public Object binarySearch(int inicio, int fin, int medio, Object o){
+		
+		Object current = arr[medio];
+		
+		if(o.equals(current)){
+			return current;
+		}
+		if(inicio == fin){
+			return null;
+		}
+
+		if((int)o < (int)current){
+			fin = medio-1;
+			medio = (inicio+fin)/2;
+		}
+		else{
+			inicio = medio+1;
+			medio = (inicio+fin)/2;
+		}
+		return binarySearch(inicio, fin, medio, o);
+	}
 
 	public void print(){
 
@@ -258,17 +295,30 @@ public class RecursiveArray {
 		return copy;
 	}
 
-	public void fill(int n){
+	public void fill(int n, int max){
 		for (int i = 0; i < n; i++) {
-			this.insertAtStart((int)Math.floor(Math.random()*1000));		
+			this.insertAtStart((int)Math.floor(Math.random()*max));		
 		}
 	}
 
 
 	public static void main(String[] args) {
 
+		Object arr[] = {1,2,3,4,5,6,7,8,9};
+		RecursiveArray bs = new RecursiveArray(arr);	
+		
+		System.out.println(bs.binarySearch(1));
+		System.out.println(bs.binarySearch(5));
+		System.out.println(bs.binarySearch(10));
+		
+		System.out.println(bs.binarySearch(0));
+		System.out.println(bs.binarySearch(-5));
+		System.out.println(bs.binarySearch(9));		
+		/*
+		bs.quickSort();
 		long startTime;
 		long totalTime;
+		
 		
 		
 				// SEGUNDO ENTREGABLE 
@@ -292,7 +342,6 @@ public class RecursiveArray {
 		System.out.println(totalTime);
 		
 		// Analisis:
-		/*
 		 * El tiempo de ejecucion del metodo Mergesort es menor al de selection sort, a medida
 		 * que se va incrementando el numero de elementos. La velocidad del ultimo se incrementa
 		 * de manera logaritmica, mientras que el metodo selection sort lo hace de manera

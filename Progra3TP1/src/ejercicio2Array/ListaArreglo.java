@@ -42,6 +42,7 @@ public class ListaArreglo {
 		arr[0] = o;
 		cantidad++;
 	}
+	
 
 	public void imprimirALoCroto(){
 

@@ -1,5 +1,4 @@
-package graph;
-
+package nodeList;
 
 public class NodeList {
 
