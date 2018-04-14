@@ -1,17 +1,32 @@
 package grafo;
+import java.util.HashMap;
 
-import nodeList.NodeList;
+import nodeList.*;
 
-public interface Grafo {
+public abstract class Grafo {
 	
-	public Grafo grafo();
-	public void agregarVertice(Vertice vertice);
-	public void agregarArista(Integer idIni, Integer idFin);
-	public Vertice obtenerVertice(Integer idVert);
-	public NodeList obtenerVertices();
-	public int numVertices();
-	public int numAristas();
-	public boolean existeArista(Integer idIni, Integer idFin);
-	public NodeList obtenerAdyacentes(Integer idVertice);
+	protected Integer cantV;
+	protected Integer cantA;
+	protected NodeList vertices;
+	protected HashMap<Integer,NodeList> mapaAdyacencias; 
+	
+	protected  Integer getCantV(){
+		return cantV;
+	}
+	protected Integer cantA(){
+		return cantA;
+	}
+	protected  NodeList getVertices(){
+		return vertices;
+	}
+	protected void agregarVertice(Vertice nuevoVertice){
+		vertices.insertAtEnd(nuevoVertice);
+	}
+	
+	protected abstract void agregarArista(Integer idVertOrigen, Arista arista);
+	protected abstract Vertice obtenerVertice(Integer idVert);
+	protected abstract boolean existeArista(Integer vertOrigenID, Integer vertFinID);
+	protected abstract NodeList obtenerAdyacentes(Integer idVert);
+
 	
 }

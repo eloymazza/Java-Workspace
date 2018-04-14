@@ -1,65 +1,53 @@
 package grafo;
 
+import java.util.*;
+
 import nodeList.NodeList;
 
-public class GrafoDirigido implements Grafo{
+public class GrafoDirigido extends Grafo{
 	
-	int cantVertices;
-	NodeList vertices;
-	NodeList aristas;
-	@Override
-	public Grafo grafo() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public GrafoDirigido(){
+		cantV = 0;
+		cantA = 0;
+		vertices = new NodeList();
+		mapaAdyacencias = new HashMap<Integer,NodeList>();
 	}
-
-	@Override
-	public void agregarVertice(Vertice vertice) {
-		// TODO Auto-generated method stub
+	
+	protected void agregarArista(Integer idVertOrigen,  Arista arista){	
 		
+		if(!mapaAdyacencias.containsKey(idVertOrigen)){
+			NodeList listaNueva = new NodeList();
+			listaNueva.insertAtEnd(arista);
+			mapaAdyacencias.put(idVertOrigen, listaNueva);
+		}
+		else{
+			mapaAdyacencias.get(idVertOrigen).insertAtEnd(arista);
+		}
+		cantA++;
 	}
-
-	@Override
-	public NodeList obtenerVertices() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int numVertices() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int numAristas() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void agregarArista(Integer idIni, Integer idFin) {
-		// TODO Auto-generated method stub
+	
+	// Mejor hacerlo con iterator
+	protected Vertice obtenerVertice(Integer idVert) {
 		
-	}
-
-	@Override
-	public Vertice obtenerVertice(Integer idVert) {
-		// TODO Auto-generated method stub
+		Vertice currentV;
+		for (int i = 0; i < cantV; i++) {
+			currentV = ((Vertice) vertices.getElementAt(i));
+			if(idVert == currentV.getID()){
+				return currentV;
+			}
+		}
 		return null;
 	}
-
 	@Override
-	public boolean existeArista(Integer idIni, Integer idFin) {
+	protected boolean existeArista(Integer vertOrigenID, Integer vertFinID) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 	@Override
-	public NodeList obtenerAdyacentes(Integer idVertice) {
+	protected NodeList obtenerAdyacentes(Integer idVert) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
+	
 }
