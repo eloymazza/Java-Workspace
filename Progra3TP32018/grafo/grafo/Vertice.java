@@ -2,7 +2,7 @@ package grafo;
 
 public class Vertice {
 	
-	Object id;
+	Integer id;
 	Object contenido;
 	State estado;
 	
@@ -25,6 +25,14 @@ public class Vertice {
 
 	public void setEstado(State estado) {
 		this.estado = estado;
+	}
+	
+	public Integer getID(){
+		return id;
+	}
+	
+	public void setID(Integer id){
+		this.id = id;
 	}
 	
 }

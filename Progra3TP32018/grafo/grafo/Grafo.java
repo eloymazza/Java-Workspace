@@ -6,12 +6,12 @@ public interface Grafo {
 	
 	public Grafo grafo();
 	public void agregarVertice(Vertice vertice);
-	public void agregarArista(Vertice deVertice, Vertice aVertice);
-	public Vertice obtenerVertice(Vertice claveVert);
+	public void agregarArista(Integer idIni, Integer idFin);
+	public Vertice obtenerVertice(Integer idVert);
 	public NodeList obtenerVertices();
 	public int numVertices();
 	public int numAristas();
-	public boolean existeArista(Vertice deVertice, Vertice aVertice);
-	public NodeList obtenerAdyacentes(Vertice vertice);
+	public boolean existeArista(Integer idIni, Integer idFin);
+	public NodeList obtenerAdyacentes(Integer idVertice);
 	
 }

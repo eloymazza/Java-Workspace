@@ -3,7 +3,10 @@ package grafo;
 import nodeList.NodeList;
 
 public class GrafoDirigido implements Grafo{
-
+	
+	int cantVertices;
+	NodeList vertices;
+	NodeList aristas;
 	@Override
 	public Grafo grafo() {
 		// TODO Auto-generated method stub
@@ -14,18 +17,6 @@ public class GrafoDirigido implements Grafo{
 	public void agregarVertice(Vertice vertice) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void agregarArista(Vertice deVertice, Vertice aVertice) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Vertice obtenerVertice(Vertice claveVert) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -47,15 +38,28 @@ public class GrafoDirigido implements Grafo{
 	}
 
 	@Override
-	public boolean existeArista(Vertice deVertice, Vertice aVertice) {
+	public void agregarArista(Integer idIni, Integer idFin) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Vertice obtenerVertice(Integer idVert) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean existeArista(Integer idIni, Integer idFin) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public NodeList obtenerAdyacentes(Vertice vertice) {
+	public NodeList obtenerAdyacentes(Integer idVertice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
