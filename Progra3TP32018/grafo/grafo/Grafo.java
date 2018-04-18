@@ -16,11 +16,9 @@ public abstract class Grafo {
 	protected Integer cantA(){
 		return cantA;
 	}
-	protected  NodeList getVertices(){
-		return vertices;
-	}
 	protected void agregarVertice(Vertice nuevoVertice){
 		vertices.insertAtEnd(nuevoVertice);
+		cantV++;
 	}
 	
 	protected abstract void agregarArista(Integer idVertOrigen, Arista arista);

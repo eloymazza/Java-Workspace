@@ -2,6 +2,7 @@ package grafo;
 
 import java.util.*;
 
+import nodeList.Node;
 import nodeList.NodeList;
 
 public class GrafoDirigido extends Grafo{
@@ -27,18 +28,20 @@ public class GrafoDirigido extends Grafo{
 		cantA++;
 	}
 	
-	// Mejor hacerlo con iterator
 	protected Vertice obtenerVertice(Integer idVert) {
 		
-		Vertice currentV;
-		for (int i = 0; i < cantV; i++) {
-			currentV = ((Vertice) vertices.getElementAt(i));
-			if(idVert == currentV.getID()){
-				return currentV;
+		Iterator<Node> it = vertices.iterator();
+		Vertice vActual;
+		
+		while(it.hasNext()){
+			vActual = (Vertice)it.next().getElement();
+			if(vActual.id == idVert){
+				return vActual;
 			}
 		}
 		return null;
 	}
+	
 	@Override
 	protected boolean existeArista(Integer vertOrigenID, Integer vertFinID) {
 		// TODO Auto-generated method stub
@@ -48,6 +51,29 @@ public class GrafoDirigido extends Grafo{
 	protected NodeList obtenerAdyacentes(Integer idVert) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public String toString(){
+		return this.vertices.toString();
+	}
+	
+	public static void main(String[] args) {
+		
+		GrafoDirigido g1 = new GrafoDirigido();
+		
+		Vertice v1 = new Vertice(1, "Olavaria");
+		Vertice v2 = new Vertice(2, "Tandil");
+		Vertice v3 = new Vertice(3, "Tapalque");
+		Vertice v4 = new Vertice(4, "Azul");
+		
+		g1.agregarVertice(v1);
+		g1.agregarVertice(v2);
+		g1.agregarVertice(v3);
+		g1.agregarVertice(v4);
+		
+		System.out.println(g1.toString());
+		System.out.println(g1.obtenerVertice(2).toString());
+		
 	}
 	
 }

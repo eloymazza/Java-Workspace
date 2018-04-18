@@ -29,6 +29,6 @@ public class Node {
 	}
 	
 	public String toString(){
-		return element.toString();
+		return this.element.toString();
 	}
 }

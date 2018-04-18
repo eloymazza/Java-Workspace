@@ -1,6 +1,8 @@
 package nodeList;
 
-public class NodeList {
+import java.util.Iterator;
+
+public class NodeList implements Iterable {
 
 	private Node root;
 	private int size = 0;
@@ -16,7 +18,7 @@ public class NodeList {
 	public int size(){
 		return size;
 	}
-
+	
 	public void insertAtStart(Object o){
 
 		Node newNode = new Node(o, null);
@@ -247,23 +249,55 @@ public class NodeList {
 		}
 		return  newList;
 	}
+	
+	
 
 	public String toString(){
 
 		String result = "";
 		Node aux = root;
 		while(aux != null){
-			result += aux.getElement() + " ";
+			result += aux.getElement().toString() + " ";
 			aux = aux.getNext();
 		}
 
 		return result;
 	}
+	
+
+	@Override
+	public Iterator<Node> iterator() {
+		if(size > 0){
+			return new NodeIterator(root);
+		}
+		else{
+			return null;
+		}
+	}
+
 
 
 
 	public static void main(String[] args) {
-
+		
+		
+		NodeList l1 = new NodeList();
+		
+		l1.insertAtEnd(1);
+		l1.insertAtEnd(2);
+		l1.insertAtEnd(3);
+		l1.insertAtEnd(4);
+		
+		System.out.println(l1.toString());
+		
+		Iterator<Node> nodeIterator = l1.iterator();
+		
+		while(nodeIterator.hasNext()){
+			System.out.println(nodeIterator.next());
+		}
+		
+		System.out.println(l1.toString());
+		/*
 		NodeList l1 = new NodeList();
 		NodeList l2 = new NodeList();
 
@@ -280,7 +314,7 @@ public class NodeList {
 		System.out.println(l1.containsAll(l2));
 	
 
-		/*
+		
 		for (int i = 0; i < 100; i++) {		
 			l1.insertAtEnd((int)Math.floor(Math.random()*100));
 		}
@@ -417,6 +451,7 @@ public class NodeList {
 
 		 */
 	}
+
 
 
 }
