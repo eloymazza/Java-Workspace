@@ -27,5 +27,9 @@ public class Arista {
 	public void setPeso(double peso) {
 		this.peso = peso;
 	}
+	
+	public String toString(){
+		return "Destino: " + destino + " Peso: " + peso;
+	}
 
 }

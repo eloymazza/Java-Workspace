@@ -43,14 +43,25 @@ public class GrafoDirigido extends Grafo{
 	}
 	
 	@Override
-	protected boolean existeArista(Integer vertOrigenID, Integer vertFinID) {
-		// TODO Auto-generated method stub
+	protected boolean existeArista(Integer idVertOrigen, Integer idVertFin) {
+		
+		NodeList listaAdy = mapaAdyacencias.get(idVertOrigen);
+		if(listaAdy != null){
+			Iterator<Node> it = listaAdy.iterator();
+			Arista currentA;
+			while(it.hasNext()){
+				currentA = (Arista)it.next().getElement();
+				if(currentA.getDestino() == idVertFin){
+					return true;
+				}
+			}	
+			return false;			
+		}
 		return false;
 	}
 	@Override
 	protected NodeList obtenerAdyacentes(Integer idVert) {
-		// TODO Auto-generated method stub
-		return null;
+		return mapaAdyacencias.get(idVert);
 	}
 	
 	public String toString(){
@@ -61,18 +72,30 @@ public class GrafoDirigido extends Grafo{
 		
 		GrafoDirigido g1 = new GrafoDirigido();
 		
-		Vertice v1 = new Vertice(1, "Olavaria");
+		Vertice v1 = new Vertice(1, "Olavarria");
 		Vertice v2 = new Vertice(2, "Tandil");
 		Vertice v3 = new Vertice(3, "Tapalque");
 		Vertice v4 = new Vertice(4, "Azul");
+		
+		Arista a1 = new Arista(3,100);
+		Arista a2 = new Arista(4,80);
+		Arista a3 = new Arista(4,100);
+		Arista a4 = new Arista(3,150);
 		
 		g1.agregarVertice(v1);
 		g1.agregarVertice(v2);
 		g1.agregarVertice(v3);
 		g1.agregarVertice(v4);
 		
+		g1.agregarArista(1, a1);
+		g1.agregarArista(1, a2);
+		g1.agregarArista(2, a3);
+		g1.agregarArista(2, a4);
+		
 		System.out.println(g1.toString());
 		System.out.println(g1.obtenerVertice(2).toString());
+		System.out.println(g1.existeArista(5, 3));
+		System.out.println(g1.obtenerAdyacentes(5));
 		
 	}
 	
