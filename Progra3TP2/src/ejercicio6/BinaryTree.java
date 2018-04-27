@@ -1,4 +1,5 @@
 package ejercicio6;
+
 import java.util.*;
 
 public class BinaryTree {
@@ -23,20 +24,17 @@ public class BinaryTree {
 	}
 	
 	public void insert(Integer key){
-		if(!hasElem(key)){
 			Node newNode = new Node(key);
+			if(root == null){
+				root = newNode;				
+			}
 			addNode(newNode, root);			
-		}
 	}
 	
 	private void addNode(Node newNode, Node node) {
 		
-
-		if(node == null){
-			node = newNode;
-		}
-		else{	
-			if(newNode.getKey() <= node.getKey()){
+		if(newNode.getKey() != node.getKey()){
+			if(newNode.getKey() < node.getKey()){
 				if(node.getLeft() != null){
 					addNode(newNode, node.getLeft());
 				}
@@ -52,7 +50,6 @@ public class BinaryTree {
 					node.setRight(newNode);
 				}
 			}
-		
 		}
 	}
 	
@@ -308,13 +305,49 @@ public class BinaryTree {
 		return elements;
 	}
 	
+	public LinkedList<Node>getLongestBranch(){
+		
+		if(!isEmpty()){
+			return getLongestBranch(root);
+		}
+		return null;
+	}
+	
+	private LinkedList<Node> getLongestBranch(Node node) {
+		
+		LinkedList<Node> lb = new LinkedList<Node>();
+		if(node != null){
+			lb.add(node);
+			Node left = node.getLeft();
+			Node right = node.getRight();
+			
+			if(left != null || right != null){
+				LinkedList<Node> lbl = getLongestBranch(left);
+				LinkedList<Node> lbr = getLongestBranch(right);
+				if(lbl.size() > lbr.size()){
+					lb.addAll(lbl);
+				}				
+				else{
+					lb.addAll(lbr);
+				}				
+			}
 
+			return lb;
+		}
+		return lb;
+		
+	}
 	
 	public static void main(String[] args) {
 		
 		BinaryTree t = new BinaryTree(5);
 		
-		t.insert(4);
+		t.insert(8);
+		t.insert(12);
+		t.insert(1);
+		
+		System.out.println(t.getLongestBranch());
+		/*
 		t.insert(2);
 		t.insert(8);
 		t.insert(6);
@@ -342,6 +375,17 @@ public class BinaryTree {
 		System.out.println(t.getElemAtLevel(10));
 		System.out.println("Longest Branch:");
 		System.out.println(DFSTree.getLongestBranch(t));
+
+		
+		 * Complejidad de los metodos Insert y hasElem
+		 	El costo de los metodos insert(Integer) y hasElem(Integer) en el peor de los casos
+		 	es O(Log2N). Como al arbol le podemos aplicar una busqueda binaria, el metodo
+		 	hasElem tiene una complejidad O(Log2N), ya que (si el arbol esta balanceado)
+		 	se descarta en cada iteracion la mitad del arbol. Como para insertar
+		 	un elemento se debe buscar primero el padre, tambien la insercion tiene la misma complejidad
+		 	que una busqueda (mas un paso, el de agregar, que no influye en la 
+		 	complejidad).
+		*/
 
 	}
 
