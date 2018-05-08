@@ -1,6 +1,7 @@
 package ejercicio6;
-
 import java.util.*;
+
+
 
 public class BinaryTree {
 
@@ -10,8 +11,8 @@ public class BinaryTree {
 		root = new Node();
 	}
 	
-	public BinaryTree(Integer key){
-		root = new Node(key);
+	public BinaryTree(Comparable<Object> object){
+		root = new Node(object);
 	}
 	public BinaryTree(Node root){
 		this.root = root;
@@ -22,52 +23,50 @@ public class BinaryTree {
 	}
 	
 	public boolean isEmpty(){
-		
 		return root.isEmpty();
-		
 	}
 	
-	public void insert(Integer key){
-			addNode(key, root);			
+	public void insert(Comparable<Object> object){
+			addNode(object, root);			
 	}
 	
-	private void addNode(Integer key, Node node) {
+	private void addNode(Comparable<Object> object, Node node) {
 		
 		if(node.isEmpty()){
-			node.setKey(key);
+			node.setObject(object);
 			node.setLeft(new Node());
 			node.setRight(new Node());
 		}
 		else{
-			if(key != node.getKey()){
-				if(key < node.getKey()){
-					addNode(key, node.getLeft());
+			if(!object.equals(node.getObject())){
+				if(node.getObject().compareTo(object) > -1){
+					addNode(object, node.getLeft());
 				}
 				else{
-					addNode(key, node.getRight());
+					addNode(object, node.getRight());
 				}
 			}			
 		}
 		
 	}
 	
-	public boolean hasElem(Integer elem){	
-		return hasElem(root, elem);	
+	public boolean hasElem(Comparable<Object> object){	
+		return hasElem(root, object);	
 	}
 	
-	private boolean hasElem(Node node, Integer elem){
+	private boolean hasElem(Node node, Comparable<Object> object){
 		
 		if(!node.isEmpty()){
-			Integer currentKey = node.getKey();
-			if(elem == currentKey){
+			Comparable<Object> currentObject = node.getObject();
+			if(currentObject.equals(object)){
 				return true;
 			}
 			else{
-				if(elem < currentKey){
-					return hasElem(node.getLeft(), elem);
+				if(currentObject.compareTo(object) < 1){
+					return hasElem(node.getLeft(), object);
 				}
-				else if(elem > currentKey){
-					return hasElem(node.getRight(), elem);
+				else{
+					return hasElem(node.getRight(), object);
 				}
 			}
 		}
@@ -85,7 +84,7 @@ public class BinaryTree {
 		if(!node.getLeft().isEmpty()){
 			printInOrder(node.getLeft());			
 		}
-		System.out.println(node.toString());
+		System.out.println(node.getObject().toString());
 		if(!node.getRight().isEmpty()){
 			printInOrder(node.getRight());
 		}
@@ -105,7 +104,7 @@ public class BinaryTree {
 		if(!node.getRight().isEmpty()){
 			printPostOrder(node.getRight());
 		}
-		System.out.println(node.toString());
+		System.out.println(node.getObject().toString());
 	}
 	
 	public void printPreOrder() {
@@ -115,7 +114,7 @@ public class BinaryTree {
 	}
 	
 	private void printPreOrder(Node node) {
-		System.out.println(node.toString());
+		System.out.println(node.getObject().toString());
 		if(!node.getLeft().isEmpty()){
 			printPreOrder(node.getLeft());			
 		}
@@ -124,26 +123,25 @@ public class BinaryTree {
 		}
 	}
 	
-	public boolean delete(Integer elem){
+	
+	public boolean delete(Object elem){
 			return delete(root, elem);
 	}
 	
-	private boolean delete(Node currentNode, Integer elem) {
+	
+	private boolean delete(Node currentNode, Object object) {
 		
 		if(!currentNode.isEmpty()){
-			if(currentNode.getKey().equals(elem)){
-				Node replaceNode = replaceNode(currentNode);
-				currentNode.setKey(replaceNode.getKey());
-				currentNode.setLeft(replaceNode.getLeft());
-				currentNode.setRight(replaceNode.getRight());
+			if(currentNode.getObject().equals(object)){
+				currentNode.replace(replaceNode(currentNode));
 				return true;				
 			}
 			else{
-				if(currentNode.getKey() > elem){
-					 return delete(currentNode.getLeft(), elem);					
+				if(currentNode.getObject().compareTo(object) > -1){
+					 return delete(currentNode.getLeft(), object);					
 				}
 				else{
-					return delete(currentNode.getRight(), elem);				
+					return delete(currentNode.getRight(), object);				
 				}	
 			}
 		}
@@ -161,12 +159,9 @@ public class BinaryTree {
 		if(targetNode.hasAChild()){
 			return targetNode.getAChild();
 		}
-		Node nmd = getNMD(targetNode.getLeft());
-		Integer nmdKey = nmd.getKey();
-		delete(targetNode.getKey());
-		nmd.setLeft(targetNode.getLeft());
+		Node nmd = new Node(getNMD(targetNode.getLeft()));
+		delete(nmd.getObject());
 		nmd.setRight(targetNode.getRight());
-		nmd.setKey(nmdKey);
 		return nmd;
 	}
 	
@@ -178,17 +173,16 @@ public class BinaryTree {
 		}
 		return getNMD(node.getRight());
 	}
+
 	
 	public int getHeight(){
 		
 		int level = -1;
-		int maxHeight = -1;
-		
-		if(isEmpty()){
-			return maxHeight;
+		if(!isEmpty()){
+			int maxHeight = -1;
+			return getHeight(root, level, maxHeight);
 		}
-		return getHeight(root, level, maxHeight);
-		
+		return level;
 	}
 	
 	
@@ -213,27 +207,23 @@ public class BinaryTree {
 	
 	public List<Node> getFrontera(){
 		
-		if(!isEmpty()){
-			List<Node> frontera = new LinkedList<Node>();
-			return getFrontera(root, frontera);
-		}
-		return null;
-	
+		List<Node> frontera = new LinkedList<Node>();
+		return getFrontera(root, frontera);
+		
 	}
 	
 	private List<Node> getFrontera(Node currentNode, List<Node> frontera) {
 		
 		Node left = currentNode.getLeft();
 		Node right = currentNode.getRight();
-		
 		if(currentNode.noChilds()){
 			frontera.add(currentNode);
 		}
 		else{
-			if(left != null){
+			if(!left.isEmpty()){
 				frontera = getFrontera(left, frontera);				
 			}
-			if(right != null){
+			if(!right.isEmpty() ){
 				frontera = getFrontera(right,frontera);
 			}
 		}
@@ -241,16 +231,12 @@ public class BinaryTree {
 	}
 	
 	public Node getMaxElem() {
-		
-		if(!isEmpty()){
-			return getMaxElem(root); 
-		}
-		return null;
+		return getMaxElem(root); 
 	}
 	
 	private Node getMaxElem(Node currentNode) {
 		
-		if(currentNode.getRight() != null){
+		if(!currentNode.getRight().isEmpty()){
 			return getMaxElem(currentNode.getRight());
 		}
 		return currentNode;
@@ -258,37 +244,26 @@ public class BinaryTree {
 	
 	public List<Node> getElemAtLevel(int targetLevel) {
 		
-		if(getHeight() >= targetLevel){
-			List<Node> elements = new LinkedList<Node>();
-			if(targetLevel == 0){
-				elements.add(root);
-				return elements;
-			}
-			int currentLevel = -1;
-			return getElemAtLevel(root, targetLevel, currentLevel, elements);
+		if(getHeight() >= targetLevel && targetLevel > -1){
+			int currentLevel = 0;
+			return getElemAtLevel(root, targetLevel, currentLevel);
 		}
 		return null;
 	}
 	
-	private List<Node> getElemAtLevel(Node node, int targetlevel, int currentLevel, List<Node> elements){
+	private List<Node> getElemAtLevel(Node node, int targetLevel, int currentLevel){
 		
-		Node left = node.getLeft();
-		Node right = node.getRight();
-		currentLevel++;
-		if(currentLevel == targetlevel-1){
-			if(left != null){
-				elements.add(left);
-			}
-			if(right != null){
-				elements.add(right);
-			}
+		List<Node> elements = new LinkedList<Node>();
+		if(currentLevel == targetLevel){
+			elements.add(node);
 		}
 		else{
-			if(left != null){
-				elements = getElemAtLevel(left, targetlevel, currentLevel, elements);
+			currentLevel++;
+			if(!node.getLeft().isEmpty()){
+				elements.addAll(getElemAtLevel(node.getLeft(), targetLevel, currentLevel));
 			}
-			if(right != null){
-				elements = getElemAtLevel(right, targetlevel, currentLevel, elements);
+			if(!node.getRight().isEmpty()){
+				elements.addAll(getElemAtLevel(node.getRight(), targetLevel, currentLevel));
 			}
 		}
 		return elements;
@@ -305,12 +280,12 @@ public class BinaryTree {
 	private LinkedList<Node> getLongestBranch(Node node) {
 		
 		LinkedList<Node> lb = new LinkedList<Node>();
-		if(node != null){
+		if(!node.isEmpty()){
 			lb.add(node);
 			Node left = node.getLeft();
 			Node right = node.getRight();
 			
-			if(left != null || right != null){
+			if(!left.isEmpty() || !right.isEmpty()){
 				LinkedList<Node> lbl = getLongestBranch(left);
 				LinkedList<Node> lbr = getLongestBranch(right);
 				if(lbl.size() > lbr.size()){
@@ -329,35 +304,42 @@ public class BinaryTree {
 	
 	class Node {
 		
-		private Integer key;
+		private Comparable<Object> object;
 		private Node left;
 		private Node right;
 			
 		public Node(){
-			key = null;
+			object = null;
 			left = null;
 			right = null;
 		}
 		
-		public Node(Integer key){
-			this.key = key;
-			left = null;
-			right = null;
+		public void replace(Node replaceNode) {
+			object = replaceNode.getObject();
+			left = replaceNode.getLeft();
+			right = replaceNode.getRight();
+			
+		}
+
+		public Node(Comparable<Object> object){
+			this.object = object;
+			left = new Node();
+			right = new Node();
 		}
 		
 		public Node(Node base){
-			this.key = base.getKey();
+			this.object = base.getObject();
 			this.left = base.getLeft();
 			this.right = base.getRight();
 		}
 		
-		public Integer getKey() {
-			return key;
+		public Comparable<Object> getObject() {
+			return object;
 		}
 		
 
-		public void setKey(Integer key) {
-			this.key = key;
+		public void setObject(Comparable<Object> object) {
+			this.object = object;
 		}
 
 		public Node getLeft() {
@@ -380,13 +362,14 @@ public class BinaryTree {
 		
 		
 		public String toString() {
-			if(key != null){
-				return key.toString();				
+			if(object != null){
+				return object.toString();				
 			}
 			return null;
 		}	
+		
 		public boolean isEmpty() {
-			return key == null;
+			return object == null;
 		}
 		
 		public boolean noChilds(){
@@ -413,37 +396,21 @@ public class BinaryTree {
 		
 		BinaryTree t = new BinaryTree();
 		
+		t.insert(new Thing("m"));
+		t.insert(new Thing("f"));
+		t.insert(new Thing("u"));
+		t.insert(new Thing("c"));
+		t.insert(new Thing("p"));
+		t.insert(new Thing("h"));
+		t.insert(new Thing("v"));
+
+		System.out.println(t.getElemAtLevel(2));
 		
-		t.insert(8);
-		t.insert(10);
-		t.insert(5);
-		t.insert(12);
-		t.insert(9);
 		t.printInOrder();
-		System.out.println(t.delete(10));
-		t.printInOrder();
-		/*
-		System.out.println(t.hasElem(13));
-		System.out.println(t.getHeight());
-		System.out.println("In Order: ");
-		t.printInOrder();
-		System.out.println("Pre Order: ");
-		t.printPreOrder();
-		System.out.println("Post Order: ");
-		t.printPostOrder();
-		System.out.println(t.getHeight());
-		System.out.println(t.getFrontera());
-		System.out.println(t.getMaxElem());
-		System.out.println(t.getElemAtLevel(10));
-		System.out.println("Longest Branch:");
-		System.out.println(t.getLongestBranch());
-		 */
-		
-		/*
 
 		
-		 * Complejidad de los metodos Insert y hasElem
-		 	El costo de los metodos insert(Integer) y hasElem(Integer) en el peor de los casos
+		/* Complejidad de los metodos Insert y hasElem
+		 	El costo de los metodos insert(Object) y hasElem(Object) en el peor de los casos
 		 	es O(Log2N). Como al arbol le podemos aplicar una busqueda binaria, el metodo
 		 	hasElem tiene una complejidad O(Log2N), ya que (si el arbol esta balanceado)
 		 	se descarta en cada iteracion la mitad del arbol. Como para insertar
