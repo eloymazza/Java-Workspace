@@ -35,4 +35,10 @@ public class Vertice {
 		return "ID vertice:" + this.id + ", contenido: " +  this.contenido;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		// TODO Auto-generated method stub
+		return this.id == (Integer)obj;
+	}
+	
 }

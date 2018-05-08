@@ -31,5 +31,10 @@ public class Arista {
 	public String toString(){
 		return "Destino: " + destino + " Peso: " + peso;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return destino == (Integer)obj;
+	}
 
 }

@@ -1,12 +1,14 @@
 package grafo;
+import java.util.HashMap;
+import java.util.Iterator;
+import nodeList.*;
 
-import java.util.*;
-
-import nodeList.Node;
-import nodeList.NodeList;
-
-public class GrafoDirigido extends Grafo{
+public class GrafoDirigido{
 	
+	protected Integer cantV;
+	protected Integer cantA;
+	protected NodeList vertices;
+	protected HashMap<Integer,NodeList> mapaAdyacencias; 
 	
 	public GrafoDirigido(){
 		cantV = 0;
@@ -15,17 +17,18 @@ public class GrafoDirigido extends Grafo{
 		mapaAdyacencias = new HashMap<Integer,NodeList>();
 	}
 	
-	protected void agregarArista(Integer idVertOrigen,  Arista arista){	
-		
-		if(!mapaAdyacencias.containsKey(idVertOrigen)){
-			NodeList listaNueva = new NodeList();
-			listaNueva.insertAtEnd(arista);
-			mapaAdyacencias.put(idVertOrigen, listaNueva);
-		}
-		else{
-			mapaAdyacencias.get(idVertOrigen).insertAtEnd(arista);
-		}
-		cantA++;
+	protected  Integer getCantV(){
+		return cantV;
+	}
+	
+	protected Integer cantA(){
+		return cantA;
+	}
+	
+	protected void agregarVertice(Vertice nuevoVertice){
+		vertices.insertAtEnd(nuevoVertice);
+		mapaAdyacencias.put(nuevoVertice.getID(), new NodeList());
+		cantV++;
 	}
 	
 	protected Vertice obtenerVertice(Integer idVert) {
@@ -42,26 +45,26 @@ public class GrafoDirigido extends Grafo{
 		return null;
 	}
 	
-	@Override
 	protected boolean existeArista(Integer idVertOrigen, Integer idVertFin) {
 		
-		NodeList listaAdy = mapaAdyacencias.get(idVertOrigen);
-		if(listaAdy != null){
-			Iterator<Node> it = listaAdy.iterator();
-			Arista currentA;
-			while(it.hasNext()){
-				currentA = (Arista)it.next().getElement();
-				if(currentA.getDestino() == idVertFin){
-					return true;
-				}
-			}	
-			return false;			
+		if(vertices.contains(idVertOrigen) && vertices.contains(idVertFin)){
+			return mapaAdyacencias.get(idVertOrigen).contains(idVertFin);
 		}
 		return false;
 	}
-	@Override
+	
 	protected NodeList obtenerAdyacentes(Integer idVert) {
 		return mapaAdyacencias.get(idVert);
+	}
+	
+	protected void agregarArista(Integer idVertOrigen,  Arista arista){	
+		
+		Integer idDestino = arista.getDestino();
+		
+		if(vertices.contains(idVertOrigen) && vertices.contains(idDestino)){
+			mapaAdyacencias.get(idVertOrigen).insertAtEnd(arista);
+			cantA++;			
+		}
 	}
 	
 	public String toString(){
@@ -70,7 +73,7 @@ public class GrafoDirigido extends Grafo{
 	
 	public static void main(String[] args) {
 		
-		GrafoDirigido g1 = new GrafoDirigido();
+		GrafoNoDirigido g1 = new GrafoNoDirigido();
 		
 		Vertice v1 = new Vertice(1, "Olavarria");
 		Vertice v2 = new Vertice(2, "Tandil");
@@ -93,9 +96,9 @@ public class GrafoDirigido extends Grafo{
 		g1.agregarArista(2, a4);
 		
 		System.out.println(g1.toString());
-		System.out.println(g1.obtenerVertice(2).toString());
-		System.out.println(g1.existeArista(5, 3));
-		System.out.println(g1.obtenerAdyacentes(5));
+		System.out.println(g1.obtenerVertice(3).toString());
+		System.out.println(g1.existeArista(4, 1));
+		System.out.println(g1.obtenerAdyacentes(1));
 		
 	}
 	
