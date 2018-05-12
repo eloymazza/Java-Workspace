@@ -2,18 +2,17 @@ package grafo;
 
 public class Vertice {
 	
+	static Integer numV = 0;
 	Integer id;
 	Object contenido;
 	
-	public Vertice(Integer id, Object contenido){
-		this.id = id;
-		this.contenido = contenido;
-	}
-	
 	public Vertice(Object contenido){
+		this.id = numV;
 		this.contenido = contenido;
+		numV++;
 	}
 	
+
 
 	public Object getContenido() {
 		return contenido;
