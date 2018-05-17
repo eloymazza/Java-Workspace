@@ -1,21 +1,18 @@
 package grafo;
-import java.util.HashMap;
-import java.util.Iterator;
-
-import nodeList.*;
+import java.util.*;
 
 public class GrafoDirigido{
 	
 	protected Integer cantV;
 	protected Integer cantA;
-	protected NodeList vertices;
-	protected HashMap<Integer,NodeList> mapaAdyacencias; 
+	protected List<Vertice> vertices;
+	protected HashMap<Integer,LinkedList<Arista>> mapaAdyacencias; 
 	
 	public GrafoDirigido(){
 		cantV = 0;
 		cantA = 0;
-		vertices = new NodeList();
-		mapaAdyacencias = new HashMap<Integer,NodeList>();
+		vertices = new LinkedList<Vertice>();
+		mapaAdyacencias = new HashMap<Integer,LinkedList<Arista>>();
 	}
 	
 	protected  Integer getCantV(){
@@ -27,52 +24,63 @@ public class GrafoDirigido{
 	}
 	
 	protected void agregarVertice(Vertice nuevoVertice){
-		vertices.insertAtEnd(nuevoVertice);
-		mapaAdyacencias.put(nuevoVertice.getID(), new NodeList());
+		vertices.add(nuevoVertice);
+		mapaAdyacencias.put(nuevoVertice.getID(), new LinkedList<Arista>());
 		cantV++;
 	}
-	
+
 	protected Vertice obtenerVertice(Integer idVert) {
 		
-		Iterator<Node> it = vertices.iterator();
+		Iterator<Vertice> it = vertices.iterator();
 		Vertice vActual;
 		
 		while(it.hasNext()){
-			vActual = (Vertice)it.next().getElement();
-			if(vActual.id == idVert){
+			vActual = it.next();
+			if(vActual.getID() == idVert){
 				return vActual;
 			}
 		}
-		return null;
+		
+		return new Vertice();
 	}
-	
+
+
+	protected void agregarArista(Integer idVertOrigen,  Arista arista){	
+		
+		if(existeVertice(idVertOrigen) && existeVertice(arista.getDestino())){
+			mapaAdyacencias.get(idVertOrigen).add(arista);
+			cantA++;						
+		}
+		
+	}
 	
 	protected boolean existeArista(Integer idVertOrigen, Integer idVertFin) {
 		
-		if(vertices.contains(idVertOrigen) && vertices.contains(idVertFin)){
-			return mapaAdyacencias.get(idVertOrigen).contains(idVertFin);
+		if(existeVertice(idVertOrigen) && existeVertice(idVertFin)){
+			Iterator<Arista> it = mapaAdyacencias.get(idVertOrigen).iterator();
+			while(it.hasNext()){
+				if(it.next().getDestino() == idVertFin){
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 	
-	protected NodeList obtenerAdyacentes(Integer idVert) {
+	protected LinkedList<Arista> obtenerAdyacentes(Integer idVert) {
 		return mapaAdyacencias.get(idVert);
 	}
 	
-	protected void agregarArista(Integer idVertOrigen,  Arista arista){	
-		
-		Integer idDestino = arista.getDestino();
-		
-		if(vertices.contains(idVertOrigen) && vertices.contains(idDestino)){
-			mapaAdyacencias.get(idVertOrigen).insertAtEnd(arista);
-			cantA++;			
-		}
-	}
 	
-	public Iterator<Node> getVIterator() {
+	private boolean existeVertice(Integer target) {
+		return mapaAdyacencias.containsKey(target);
+
+	}
+
+	public Iterator<Vertice> getVIterator() {
 		return vertices.iterator();
 	}
-	
+
 	
 	public String toString(){
 		return this.vertices.toString();
@@ -81,17 +89,17 @@ public class GrafoDirigido{
 	public static class DFS{
 		
 		static State[] estados; 
-		static NodeList ls = new NodeList();
+		static LinkedList<Integer> ls = new LinkedList<Integer>();
 		
-		public static NodeList DFSPath(GrafoNoDirigido g){
+		public static LinkedList<Integer> DFSPath(GrafoDirigido g){
 			
-			ls.removeAll();
-			Iterator<Node> it = g.getVIterator();
+			ls.clear();
 			llenarEstados(g.getCantV());
 			Integer currentID;
+			Iterator<Vertice> it = g.getVIterator();
 			
 			while(it.hasNext()){
-				currentID = ((Vertice)it.next().getElement()).getID();
+				currentID = it.next().getID();
 				if(estados[currentID] == State.unvisited){
 					DFSPath(currentID,g);									
 				}
@@ -99,17 +107,17 @@ public class GrafoDirigido{
 			return ls;	
 		}
 		
-		private static void DFSPath(Integer idvert, GrafoNoDirigido g){
+		private static void DFSPath(Integer idvert, GrafoDirigido g){
 				
-			ls.insertAtEnd(idvert);
+			ls.add(idvert);
 			estados[idvert] = State.visiting;
-			NodeList ady = g.obtenerAdyacentes(idvert);
+			LinkedList<Arista> ady = g.obtenerAdyacentes(idvert);
 	
-			Iterator<Node> it = ady.iterator();
+			Iterator<Arista> it = ady.iterator();
 			Integer destino;
 
 			while(it.hasNext()){
-				destino = ((Arista)it.next().getElement()).getDestino();
+				destino = ((Arista)it.next()).getDestino();
 				if(estados[destino] == State.unvisited){
 					DFSPath(destino,g);
 				}
@@ -130,32 +138,39 @@ public class GrafoDirigido{
 	
 	public static void main(String[] args) {
 		
-		GrafoNoDirigido g1 = new GrafoNoDirigido();
+		GrafoDirigido g1 = new GrafoDirigido();
 		
-		Vertice v1 = new Vertice("Olavarria");
-		Vertice v2 = new Vertice("Tandil");
-		Vertice v3 = new Vertice("Tapalque");
-		Vertice v4 = new Vertice("Azul");
+		Vertice v1 = new Vertice("A");
+		Vertice v2 = new Vertice("B");
+		Vertice v3 = new Vertice("C");
+		Vertice v4 = new Vertice("D");
 		
-		Arista a1 = new Arista(3,100);
-		Arista a2 = new Arista(4,80);
-		Arista a3 = new Arista(4,100);
-		Arista a4 = new Arista(3,150);
+		
+		Arista a1 = new Arista(2,1);
+		Arista a2 = new Arista(3,1);
+		Arista a3 = new Arista(4,1);
+		Arista a4 = new Arista(3,1);
+		Arista a5 = new Arista(4,1);
+		Arista a6 = new Arista(2,1);
+
 		
 		g1.agregarVertice(v1);
 		g1.agregarVertice(v2);
 		g1.agregarVertice(v3);
 		g1.agregarVertice(v4);
 		
+		
 		g1.agregarArista(1, a1);
 		g1.agregarArista(1, a2);
-		g1.agregarArista(2, a3);
+		g1.agregarArista(1, a3);
 		g1.agregarArista(2, a4);
+		g1.agregarArista(3, a5);
+		g1.agregarArista(4, a6);
 		
 		System.out.println(g1.toString());
-		System.out.println(g1.obtenerVertice(2).toString());
-		System.out.println(g1.existeArista(1, 2));
-		System.out.println(g1.obtenerAdyacentes(2));
+		System.out.println(g1.obtenerVertice(1).toString());
+		System.out.println(g1.existeArista(1, 3));
+		System.out.println(g1.obtenerAdyacentes(1));
 		System.out.println(DFS.DFSPath(g1));
 		
 	}

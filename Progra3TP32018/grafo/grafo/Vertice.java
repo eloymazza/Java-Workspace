@@ -12,7 +12,9 @@ public class Vertice {
 		numV++;
 	}
 	
-
+	public Vertice(){
+		contenido = "Vertice Inexistente";
+	}
 
 	public Object getContenido() {
 		return contenido;

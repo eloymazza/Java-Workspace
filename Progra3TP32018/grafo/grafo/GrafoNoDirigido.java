@@ -1,16 +1,16 @@
 package grafo;
 
-import java.util.HashMap;
+import java.util.*;
 
-import nodeList.NodeList;
+
 
 public class GrafoNoDirigido extends GrafoDirigido{
 
 	public GrafoNoDirigido(){
 		cantV = 0;
 		cantA = 0;
-		vertices = new NodeList();
-		mapaAdyacencias = new HashMap<Integer,NodeList>();
+		vertices = new LinkedList<Vertice>();
+		mapaAdyacencias = new HashMap<Integer,LinkedList<Arista>>();
 	}
 	
 	
@@ -21,8 +21,8 @@ public class GrafoNoDirigido extends GrafoDirigido{
 		
 		if(vertices.contains(idVertOrigen) && vertices.contains(idDestino)){
 			Arista nuevaArista = new Arista(idVertOrigen);
-			mapaAdyacencias.get(idVertOrigen).insertAtEnd(arista);
-			mapaAdyacencias.get(idDestino).insertAtEnd(nuevaArista);
+			mapaAdyacencias.get(idVertOrigen).add(arista);
+			mapaAdyacencias.get(idDestino).add(nuevaArista);
 		}
 		
 	}
