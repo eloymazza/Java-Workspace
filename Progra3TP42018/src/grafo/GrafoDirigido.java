@@ -54,6 +54,15 @@ public class GrafoDirigido{
 		
 	}
 	
+	public void agregarArista(Integer idVertOrigen,  Integer vertDestino){	
+		
+		if(existeVertice(idVertOrigen) && existeVertice(vertDestino)){
+			mapaAdyacencias.get(idVertOrigen).add(new Arista(vertDestino,1));
+			cantA++;						
+		}
+		
+	}
+	
 	public boolean existeArista(Integer idVertOrigen, Integer idVertFin) {
 		
 		if(existeVertice(idVertOrigen) && existeVertice(idVertFin)){
@@ -86,7 +95,7 @@ public class GrafoDirigido{
 		return this.vertices.toString();
 	}
 	
-	public static class Recorridos{
+	public static class DFS{
 		
 		static State[] estados; 
 		static LinkedList<Integer> ls = new LinkedList<Integer>();
@@ -126,66 +135,7 @@ public class GrafoDirigido{
 			estados[idvert] = State.visited;
 		}
 		
-		public static boolean tieneCiclo(GrafoDirigido g){
-			
-			ls.clear();
-			llenarEstados(g.getCantV());
-			return tieneCiclo(0,g);
-
-		}
 		
-		private static boolean tieneCiclo(Integer idvert, GrafoDirigido g){
-			
-			estados[idvert] = State.visiting;
-			LinkedList<Arista> adyacentes = g.obtenerAdyacentes(idvert);
-			Integer destino;
-			
-			for (Arista arista : adyacentes) {
-				destino = arista.getDestino();
-				if(estados[destino] == State.visiting){
-					return true;
-				}
-				if(estados[destino] == State.unvisited){
-					if(tieneCiclo(destino,g)){
-						return true;
-					}
-				}
-			}
-			estados[idvert] = State.visited;
-			return false;
-		}
-		
-		public static LinkedList<Integer> BFSPath(GrafoDirigido g, Integer idVInicial){
-			
-			ls.clear();
-			llenarEstados(g.getCantV());
-			Queue<Integer> queue = new LinkedList<Integer>();
-			queue.add(idVInicial);
-			BFSPath(idVInicial, g, queue);
-			return ls;
-			
-		}
-		
-			
-		private static void BFSPath(Integer idVActual, GrafoDirigido g, Queue<Integer> queue) {
-			
-			estados[idVActual] = State.visited;
-			ls.add(idVActual);
-			while(!queue.isEmpty()){
-				LinkedList<Arista> adyacentes = g.obtenerAdyacentes(queue.poll());
-				for (Arista arista : adyacentes) {
-					Integer adyacente = arista.getDestino();
-					if(estados[adyacente] == State.unvisited){
-						ls.add(adyacente);
-						estados[adyacente] = State.visited;
-						queue.add(adyacente);
-					}
-				}
-			}
-			
-		}
-		
-
 		private static void llenarEstados(Integer cantV){
 			estados = new State[cantV];
 			for (int i = 0; i < cantV; i++) {
@@ -195,8 +145,6 @@ public class GrafoDirigido{
 		
 	}
 	
-	
-	
 	public static void main(String[] args) {
 		
 		GrafoDirigido g1 = new GrafoDirigido();
@@ -205,37 +153,34 @@ public class GrafoDirigido{
 		Vertice v2 = new Vertice("B");
 		Vertice v3 = new Vertice("C");
 		Vertice v4 = new Vertice("D");
-		Vertice v5 = new Vertice("E");
-		Vertice v6 = new Vertice("F");
-		Vertice v7 = new Vertice("G");
 		
 		
-		Arista a1 = new Arista(1,1);
-		Arista a2 = new Arista(2,1);
-		Arista a3 = new Arista(5,1);
+		Arista a1 = new Arista(2,1);
+		Arista a2 = new Arista(3,1);
+		Arista a3 = new Arista(4,1);
 		Arista a4 = new Arista(3,1);
 		Arista a5 = new Arista(4,1);
-		Arista a6 = new Arista(1,1);
+		Arista a6 = new Arista(2,1);
 
 		
 		g1.agregarVertice(v1);
 		g1.agregarVertice(v2);
 		g1.agregarVertice(v3);
 		g1.agregarVertice(v4);
-		g1.agregarVertice(v5);
-		g1.agregarVertice(v6);
-		g1.agregarVertice(v7);
 		
 		
-		g1.agregarArista(0, a1);
-		g1.agregarArista(0, a2);
-		g1.agregarArista(0, a3);
-		g1.agregarArista(1, a4);
-		g1.agregarArista(1, a5);
+		g1.agregarArista(1, a1);
+		g1.agregarArista(1, a2);
+		g1.agregarArista(1, a3);
+		g1.agregarArista(2, a4);
+		g1.agregarArista(3, a5);
 		g1.agregarArista(4, a6);
 		
 		System.out.println(g1.toString());
-		System.out.println(Recorridos.tieneCiclo(g1));
+		System.out.println(g1.obtenerVertice(1).toString());
+		System.out.println(g1.existeArista(1, 3));
+		System.out.println(g1.obtenerAdyacentes(1));
+		System.out.println(DFS.DFSPath(g1));
 		
 	}
 	
