@@ -28,6 +28,12 @@ public class GrafoDirigido{
 		mapaAdyacencias.put(nuevoVertice.getID(), new LinkedList<Arista>());
 		cantV++;
 	}
+	
+	public void agregarVertice(Integer obj){
+		vertices.add(new Vertice(obj));
+		mapaAdyacencias.put(obj, new LinkedList<Arista>());
+		cantV++;
+	}
 
 	public Vertice obtenerVertice(Integer idVert) {
 		
@@ -53,6 +59,16 @@ public class GrafoDirigido{
 		}
 		
 	}
+	
+	public void agregarArista(Integer idVertOrigen,  Integer vertDestino){	
+		
+		if(existeVertice(idVertOrigen) && existeVertice(vertDestino)){
+			mapaAdyacencias.get(idVertOrigen).add(new Arista(vertDestino,1));
+			cantA++;						
+		}
+		
+	}
+	
 	
 	public boolean existeArista(Integer idVertOrigen, Integer idVertFin) {
 		
@@ -126,6 +142,48 @@ public class GrafoDirigido{
 			estados[idvert] = State.visited;
 		}
 		
+		public static LinkedList<Integer> obtenerCaminos(Integer objetivo, GrafoDirigido g){
+			
+			LinkedList<Integer> lista = new LinkedList<Integer>();
+			
+			Iterator<Vertice> it = g.getVIterator();
+			
+			while(it.hasNext()){
+				llenarEstados(g.getCantV());
+				Vertice v = it.next();
+				Integer vActual = (Integer)v.getContenido();
+				if(!(vActual).equals(objetivo)){
+					if(hayCamino(vActual,objetivo,g)){
+						lista.add(vActual);
+					}
+				}
+			}		
+			return lista;		
+		}
+		
+		private static boolean hayCamino(Integer vActual, Integer objetivo, GrafoDirigido g) {
+			
+			estados[vActual] = State.visiting;
+			if(vActual.equals(objetivo)){
+				return true;
+			}
+			else{
+				LinkedList<Arista> adyacentes = g.obtenerAdyacentes(vActual);
+				for (Arista ady : adyacentes) {
+					Integer proximo = ady.getDestino();
+					if(estados[proximo] == State.unvisited){
+						if(hayCamino(proximo,objetivo,g)){
+							return true;
+						}
+					}
+				}
+			}
+			estados[vActual] = State.visited;
+			return false;
+		}
+		
+
+
 		public static boolean tieneCiclo(GrafoDirigido g){
 			
 			ls.clear();
@@ -199,43 +257,40 @@ public class GrafoDirigido{
 	
 	public static void main(String[] args) {
 		
-		GrafoDirigido g1 = new GrafoDirigido();
+		GrafoDirigido g = new GrafoDirigido();
 		
-		Vertice v1 = new Vertice("A");
-		Vertice v2 = new Vertice("B");
-		Vertice v3 = new Vertice("C");
-		Vertice v4 = new Vertice("D");
-		Vertice v5 = new Vertice("E");
-		Vertice v6 = new Vertice("F");
-		Vertice v7 = new Vertice("G");
+		Vertice v1 = new Vertice(0);
+		Vertice v2 = new Vertice(1);
+		Vertice v3 = new Vertice(2);
+		Vertice v4 = new Vertice(3);
+		Vertice v5 = new Vertice(4);
+		Vertice v6 = new Vertice(5);
+		Vertice v7 = new Vertice(6);
 		
+	
 		
-		Arista a1 = new Arista(1,1);
-		Arista a2 = new Arista(2,1);
-		Arista a3 = new Arista(5,1);
-		Arista a4 = new Arista(3,1);
-		Arista a5 = new Arista(4,1);
-		Arista a6 = new Arista(1,1);
-
-		
-		g1.agregarVertice(v1);
-		g1.agregarVertice(v2);
-		g1.agregarVertice(v3);
-		g1.agregarVertice(v4);
-		g1.agregarVertice(v5);
-		g1.agregarVertice(v6);
-		g1.agregarVertice(v7);
+		g.agregarVertice(v1);
+		g.agregarVertice(v2);
+		g.agregarVertice(v3);
+		g.agregarVertice(v4);
+		g.agregarVertice(v5);
+		g.agregarVertice(v6);
+		g.agregarVertice(v7);
 		
 		
-		g1.agregarArista(0, a1);
-		g1.agregarArista(0, a2);
-		g1.agregarArista(0, a3);
-		g1.agregarArista(1, a4);
-		g1.agregarArista(1, a5);
-		g1.agregarArista(4, a6);
+		g.agregarArista(0,7);
+		g.agregarArista(0,1);
+		g.agregarArista(1,2);
+		g.agregarArista(1,3);
+		g.agregarArista(1,6);
+		g.agregarArista(1,5);
+		g.agregarArista(2,4);
+		g.agregarArista(3,4);
+		g.agregarArista(5,4);
+	
 		
-		System.out.println(g1.toString());
-		System.out.println(Recorridos.tieneCiclo(g1));
+		System.out.println(g.toString());
+		System.out.println(Recorridos.obtenerCaminos(4,g));
 		
 	}
 	

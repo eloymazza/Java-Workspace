@@ -3,9 +3,9 @@ package grafo;
 public class Arista {
 	
 	protected Integer destino;
-	protected double peso;
+	protected Integer peso;
 	
-	public Arista(Integer destino, double peso){
+	public Arista(Integer destino, Integer peso){
 		this.destino = destino;
 		this.peso = peso;
 	}
@@ -21,10 +21,10 @@ public class Arista {
 	public void setDestino(Integer destino) {
 		this.destino = destino;
 	}
-	public double getPeso() {
+	public Integer getPeso() {
 		return peso;
 	}
-	public void setPeso(double peso) {
+	public void setPeso(Integer peso) {
 		this.peso = peso;
 	}
 	
